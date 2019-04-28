@@ -27,4 +27,8 @@ public class Universite {
         return false;
     }
 
+    public Fakulte getIndexOf(int a){
+        return fakulteList.get(a);
+    }
+
 }
