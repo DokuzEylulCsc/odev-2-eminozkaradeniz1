@@ -9,4 +9,8 @@ public class Sube {
         this.adi = adi;
         this.ogretimElemaniList = new ArrayList<OgretimElemani>();
     }
+
+    public char getAdi() {
+        return adi;
+    }
 }

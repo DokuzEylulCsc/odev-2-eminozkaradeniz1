@@ -9,4 +9,22 @@ public class Universite {
         this.adi = adi;
         this.fakulteList = new ArrayList<Fakulte>();
     }
+
+    public boolean FakulteEkle(Fakulte fakulte){
+        if(!hasContain(fakulte.getAdi())){
+            fakulteList.add(fakulte);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean hasContain(String fakulteAdi){
+        for (Fakulte f: fakulteList) {
+            if(f.getAdi() == fakulteAdi){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

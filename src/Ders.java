@@ -11,4 +11,25 @@ public class Ders {
         this.kodu = kodu;
         this.subeList = new ArrayList<Sube>();
     }
+
+    public String getAdi() {
+        return adi;
+    }
+
+    public boolean subeEkle(Sube sube){
+        if(!hasContain(sube.getAdi())){
+            subeList.add(sube);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean hasContain(char subeAdi){
+        for (Sube s: subeList) {
+            if(s.getAdi() == subeAdi){
+                return true;
+            }
+        }
+        return false;
+    }
 }
