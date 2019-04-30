@@ -14,21 +14,26 @@ public class Fakulte {
         return adi;
     }
 
-    public boolean BolumEkle(Bolum bolum){
-        if(!hasContain(bolum.getAdi())){
-            bolumList.add(bolum);
+    public boolean BolumEkle(String bolumAdi){
+        if(BolumAra(bolumAdi) == -1){
+            bolumList.add(new Bolum(bolumAdi));
             return true;
         }
         return false;
     }
 
-    private boolean hasContain(String bolumAdi){
+    public int BolumAra(String bolumAdi){
         for (Bolum b: bolumList) {
-            if(b.getAdi() == bolumAdi){
-                return true;
+            if(b.getAdi().equals(bolumAdi)){
+                return bolumList.indexOf(b);
             }
         }
-        return false;
+        return -1;
+    }
+
+
+    public Bolum getIndexOf(int a){
+        return bolumList.get(a);
     }
 
 }

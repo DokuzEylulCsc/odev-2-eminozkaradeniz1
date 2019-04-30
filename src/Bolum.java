@@ -14,20 +14,25 @@ public class Bolum {
         return adi;
     }
 
-    public boolean DersEkle(Ders ders){
-        if(!hasContain(ders.getAdi())){
+    public boolean DersEkle(String  dersAdi, String dersKodu, int subeSayisi){
+        if(DersAra(dersAdi) == -1){
+            Ders ders = new Ders(dersAdi, dersKodu, subeSayisi);
             dersList.add(ders);
             return true;
         }
         return false;
     }
 
-    private boolean hasContain(String dersAdi){
+    private int DersAra(String dersAdi){
         for (Ders d: dersList) {
-            if(d.getAdi() == dersAdi){
-                return true;
+            if(d.getAdi().equals(dersAdi)){
+                return dersList.indexOf(d);
             }
         }
-        return false;
+        return -1;
+    }
+
+    public Ders getIndexOf(int a){
+        return dersList.get(a);
     }
 }
