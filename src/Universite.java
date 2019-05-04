@@ -7,18 +7,22 @@ public class Universite {
 
     public Universite(String adi) {
         this.adi = adi;
-        this.fakulteList = new ArrayList<Fakulte>();
+        this.fakulteList = new ArrayList<>();
     }
 
+    public String getAdi() { return adi; }
+    public Fakulte getIndexOf(int a) { return fakulteList.get(a); }
+    public List<Fakulte> getFakulteList() { return fakulteList; }
+
     public boolean FakulteEkle(String fakulteAdi){
-        if(fakulteAra(fakulteAdi) == -1){
+        if(FakulteAra(fakulteAdi) == -1){
             fakulteList.add(new Fakulte(fakulteAdi));
             return true;
         }
         return false;
     }
 
-    public int fakulteAra(String fakulteAdi){
+    private int FakulteAra(String fakulteAdi){
         for (Fakulte f: fakulteList) {
             if(f.getAdi().equals(fakulteAdi)){
                 return fakulteList.indexOf(f);
@@ -27,20 +31,11 @@ public class Universite {
         return -1;
     }
 
-    public Bolum BolumAra(String bolumAdi){
-        int i = -1;
-        for (Fakulte f: fakulteList) {
-            i = f.BolumAra(bolumAdi);
-            if(i > -1){
-                return f.getIndexOf(i);
-            }
+    public void FakulteleriListele(){
+        System.out.println("Fakülteler: ");
+        for (int i = 0; i < fakulteList.size(); i++){
+            System.out.printf("%2d. %s \n", i+1, fakulteList.get(i).getAdi());
         }
-        return null;
-
-    }
-
-    public Fakulte getIndexOf(int a){
-        return fakulteList.get(a);
     }
 
 }

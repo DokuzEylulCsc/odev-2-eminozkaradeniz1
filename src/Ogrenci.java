@@ -8,4 +8,16 @@ abstract public class Ogrenci {
         this.soyadi = soyadi;
         this.no = no;
     }
+
+    public String getAdi() {
+        return adi;
+    }
+
+    public String getSoyadi() {
+        return soyadi;
+    }
+
+    public int getNo() {
+        return no;
+    }
 }

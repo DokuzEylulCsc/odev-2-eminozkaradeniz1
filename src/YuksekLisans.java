@@ -1,5 +1,5 @@
-public class YuksekLisans {
-
-    public YuksekLisans(String adi, String soyadi, int no) {super();
+public class YuksekLisans extends Ogrenci{
+    public YuksekLisans(String adi, String soyadi, int no) {
+        super(adi, soyadi, no);
     }
 }
