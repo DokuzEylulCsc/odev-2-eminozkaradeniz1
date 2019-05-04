@@ -5,18 +5,22 @@ public class Bolum {
     private String adi;
     private List<Ders> dersList;
     private List<Ogrenci> ogrenciList;
+    private List<OgretimElemani> ogretimElemaniList;
 
-    public Bolum(String adi){
+    Bolum(String adi){
         this.adi = adi;
         this.dersList = new ArrayList<>();
         this.ogrenciList = new ArrayList<>();
+        this.ogretimElemaniList = new ArrayList<>();
     }
 
     public String getAdi() { return adi; }
     public Ders getIndexOf(int a){ return dersList.get(a); }
-    public List<Ders> getDersList() { return dersList; }
+    List<Ders> getDersList() { return dersList; }
+    List<Ogrenci> getOgrenciList() { return ogrenciList; }
+    List<OgretimElemani> getOgretimElemaniList() { return ogretimElemaniList; }
 
-    public boolean DersEkle(String  dersAdi, int subeSayisi){
+    boolean DersEkle(String dersAdi, int subeSayisi){
         if(DersAra(dersAdi) == -1){
             Ders ders = new Ders(dersAdi, subeSayisi);
             dersList.add(ders);
@@ -34,19 +38,18 @@ public class Bolum {
         return -1;
     }
 
-    public boolean DersSil(int ind){
-        dersList.remove(ind);
-        return true;
+    void DersSil(int index){
+        dersList.remove(index);
     }
 
-    public void DersleriListele(){
+    void DersleriListele(){
         System.out.println("Bölüme ait dersler: ");
         for (int i = 0; i <  dersList.size(); i++){
             System.out.printf("%2d. %s", i+1, dersList.get(i).getAdi());
         }
     }
 
-    public boolean OgrenciEkle(Ogrenci ogrenci){
+    boolean OgrenciEkle(Ogrenci ogrenci){
         if(ogrenciList.size() == 0){
             ogrenciList.add(ogrenci);
             return true;
@@ -58,6 +61,10 @@ public class Bolum {
         return false;
     }
 
+    void OgrenciSil(int index){
+        ogrenciList.remove(index);
+    }
+
     private int OgrenciAra(Ogrenci ogrenci){
         for (Ogrenci o: ogrenciList) {
             if(o.getNo() == ogrenci.getNo()){
@@ -65,6 +72,49 @@ public class Bolum {
             }
         }
         return -1;
+    }
+
+    void OgrencileriListele(){
+        System.out.println("Bölüme kayıtlı öğrenciler: ");
+        System.out.println("    Adı\tSoyadı\tNo");
+        for (int i = 0; i < ogrenciList.size(); i++){
+            System.out.printf("%2d. %s\t%s\t%d", i+1, ogrenciList.get(i).getAdi(), ogrenciList.get(i).getSoyadi()
+                    , ogrenciList.get(i).getNo());
+        }
+    }
+
+    boolean OgretimElemaniAta(String adi, String soyadi){
+        if(ogretimElemaniList.size() == 0){
+            ogretimElemaniList.add(new OgretimElemani(adi, soyadi));
+            return true;
+        }
+        if(OgretimElemaniAra(adi, soyadi) == -1){
+            ogretimElemaniList.add(new OgretimElemani(adi, soyadi));
+            return true;
+        }
+        return false;
+    }
+
+    private int OgretimElemaniAra(String adi, String soyadi){
+        for (OgretimElemani o: ogretimElemaniList) {
+            if(o.getAdi().equals(adi) && o.getSoyadi().equals(soyadi)){
+                return ogretimElemaniList.indexOf(o);
+            }
+        }
+        return -1;
+    }
+
+    void OgretimElemaniSil(int index){
+        ogretimElemaniList.remove(index);
+    }
+
+    public void OgretimElemaniListele(){
+        System.out.println("Bölümdeki öğretim elemanları: ");
+        System.out.println("    Adı\tSoyadı");
+        for (int i = 0; i < ogretimElemaniList.size(); i++){
+            System.out.printf("%2d. %s\t%s", i+1, ogretimElemaniList.get(i).getAdi()
+                    , ogretimElemaniList.get(i).getSoyadi());
+        }
     }
 
 }

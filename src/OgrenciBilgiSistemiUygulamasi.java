@@ -20,11 +20,9 @@ public class OgrenciBilgiSistemiUygulamasi {
         universite.FakulteEkle("Fen");
         universite.FakulteEkle("İşletme");
         universite.FakulteEkle("Denizcilik");
-        b = universite.getIndexOf(0).BolumEkle("Bilgisayar Bilimleri");
-        System.out.println(b);
-        b = universite.getIndexOf(0).getIndexOf(0).DersEkle("Nesne",2);
-        System.out.println(b);
-        System.out.println();
+        universite.getIndexOf(0).BolumEkle("Bilgisayar Bilimleri");
+        universite.getIndexOf(0).getIndexOf(0).DersEkle("Nesne",2);
+
         menu();
     }
 
@@ -99,7 +97,7 @@ public class OgrenciBilgiSistemiUygulamasi {
         scanner.close();
     }
 
-    private static boolean isAcceptable(String str){
+    private static boolean stringKontrol(String str){
         for(int i=0; i<str.length(); i++){
             if(!Character.isLetter(str.charAt(i))){
                 System.out.println("Noktalama işaretleri ve rakamlar olmadan giriş yapınız: ");
@@ -143,7 +141,7 @@ public class OgrenciBilgiSistemiUygulamasi {
             if(scanner.hasNextLine()){
                 fakulteAdi = scanner.next();
             }
-        }while (!isAcceptable(fakulteAdi));
+        }while (!stringKontrol(fakulteAdi));
         fakulteAdi = convertToName(fakulteAdi);
 
         boolean b = universite.FakulteEkle(fakulteAdi);
@@ -170,7 +168,7 @@ public class OgrenciBilgiSistemiUygulamasi {
             if(scanner.hasNextLine()){
                 bolumAdi = scanner.next();
             }
-        }while (!isAcceptable(bolumAdi));
+        }while (!stringKontrol(bolumAdi));
         bolumAdi = convertToName(bolumAdi);
 
         boolean b = universite.getIndexOf(i).BolumEkle(bolumAdi);
@@ -206,7 +204,7 @@ public class OgrenciBilgiSistemiUygulamasi {
             if(scanner.hasNextLine()){
                 dersAdi = scanner.next();
             }
-        }while (!isAcceptable(dersAdi));
+        }while (!stringKontrol(dersAdi));
         dersAdi = convertToName(dersAdi);
 
         int subeSayisi = -1;
@@ -263,12 +261,8 @@ public class OgrenciBilgiSistemiUygulamasi {
         System.out.println("\nDers seçiniz: ");
         int d = getIndex(n);
 
-        boolean b = universite.getIndexOf(i).getIndexOf(j).DersSil(d);
-        if (b){
-            System.out.println("Ders başarıyla silindi.");
-        }else {
-            System.out.println("Ders silinemedi.");
-        }
+        universite.getIndexOf(i).getIndexOf(j).DersSil(d);
+        System.out.println("Ders başarıyla silindi.");
     }
 
     private void ogrenciKaydi(){ //bölüme öğrenci kaydı case 5
@@ -289,6 +283,7 @@ public class OgrenciBilgiSistemiUygulamasi {
         universite.getIndexOf(i).BolumleriListele();
         System.out.println("\nBölüm seçiniz: ");
         int j = getIndex(n);
+
         System.out.println("\nÖğrenci seçimi: ");
         System.out.println("1. Lisans\n2. Yüksek Lisans\n3. Doktora");
         n = 3;
@@ -302,7 +297,7 @@ public class OgrenciBilgiSistemiUygulamasi {
             if(scanner.hasNextLine()){
                 ogrenciAdi = scanner.next();
             }
-        }while (!isAcceptable(ogrenciAdi));
+        }while (!stringKontrol(ogrenciAdi));
         ogrenciAdi = convertToName(ogrenciAdi);
 
         System.out.println("\nÖğrenci soyadı girin: ");
@@ -310,7 +305,7 @@ public class OgrenciBilgiSistemiUygulamasi {
             if(scanner.hasNextLine()){
                 ogrenciSoyadi = scanner.next();
             }
-        }while (!isAcceptable(ogrenciSoyadi));
+        }while (!stringKontrol(ogrenciSoyadi));
         ogrenciSoyadi = convertToName(ogrenciSoyadi);
 
         System.out.println("\nÖğrenci no girin: ");
@@ -333,31 +328,127 @@ public class OgrenciBilgiSistemiUygulamasi {
         }
     }
 
-    private void ogrenciKaydiSil(){ //bölümden öğrenci kaydı sil case 6
+    private void ogrenciKaydiSil(){ //bir bölümden öğrenci kaydı sil case 6
+        int n = universite.getFakulteList().size();
+        if(n == 0){
+            System.out.println("Üniversiteye ait fakülte bulunmamaktadır.");
+            return;
+        }
+        universite.FakulteleriListele();
+        System.out.println("\nFakülte seçiniz: ");
+        int i = getIndex(n);
+
+        n = universite.getIndexOf(i).getBolumList().size();
+        if(n == 0){
+            System.out.println("Bu fakülteye ait bölüm bulunmamaktadır. ");
+            return;
+        }
+        universite.getIndexOf(i).BolumleriListele();
+        System.out.println("\nBölüm seçiniz: ");
+        int j = getIndex(n);
+
+        n = universite.getIndexOf(i).getIndexOf(j).getOgrenciList().size();
+        if(n == 0){
+            System.out.println("Bu bölüme kayıtlı öğrenci bulunmamaktadır. ");
+            return;
+        }
+        universite.getIndexOf(i).getIndexOf(j).OgrencileriListele();
+        System.out.println("\nKaydı silinecek öğrenciyi seçiniz. ");
+        int o = getIndex(n);
+
+        universite.getIndexOf(i).getIndexOf(j).OgrenciSil(o);
+        System.out.println("Öğrenci kaydı başarıyla silindi.");
+    }
+
+    private void ogretimElemaniAta(){ //bir bölüme öğretim elemanı ata case 7
+        int n = universite.getFakulteList().size();
+        if(n == 0){
+            System.out.println("Üniversiteye ait fakülte bulunmamaktadır.");
+            return;
+        }
+        universite.FakulteleriListele();
+        System.out.println("\nFakülte seçiniz: ");
+        int i = getIndex(n);
+
+        n = universite.getIndexOf(i).getBolumList().size();
+        if(n == 0){
+            System.out.println("Bu fakülteye ait bölüm bulunmamaktadır. ");
+            return;
+        }
+        universite.getIndexOf(i).BolumleriListele();
+        System.out.println("\nBölüm seçiniz: ");
+        int j = getIndex(n);
+
+        String ogretimElemaniAdi = "";
+        String ogretimElemaniSoyadi = "";
+
+        System.out.println("\nÖğretim elemanının adını girin: ");
+        do{
+            if(scanner.hasNextLine()){
+                ogretimElemaniAdi = scanner.next();
+            }
+        }while (!stringKontrol(ogretimElemaniAdi));
+        ogretimElemaniAdi = convertToName(ogretimElemaniAdi);
+
+        System.out.println("\nÖğretim elemanının soyadını girin: ");
+        do{
+            if(scanner.hasNextLine()){
+                ogretimElemaniSoyadi = scanner.next();
+            }
+        }while (!stringKontrol(ogretimElemaniSoyadi));
+        ogretimElemaniSoyadi = convertToName(ogretimElemaniSoyadi);
+
+        boolean b = universite.getIndexOf(i).getIndexOf(j).OgretimElemaniAta(ogretimElemaniAdi, ogretimElemaniSoyadi);
+        if (b){
+            System.out.println("Öğretim elemanı bölüme başarıyla atandı.");
+        }else {
+            System.out.println("Öğretim elemanı bu bölüme daha önce atanmış.");
+        }
+    }
+
+    private void ogretimElemaniSil(){ //bir bölümden öğretim elemanı sil case 8
+        int n = universite.getFakulteList().size();
+        if(n == 0){
+            System.out.println("Üniversiteye ait fakülte bulunmamaktadır.");
+            return;
+        }
+        universite.FakulteleriListele();
+        System.out.println("\nFakülte seçiniz: ");
+        int i = getIndex(n);
+
+        n = universite.getIndexOf(i).getBolumList().size();
+        if(n == 0){
+            System.out.println("Bu fakülteye ait bölüm bulunmamaktadır. ");
+            return;
+        }
+        universite.getIndexOf(i).BolumleriListele();
+        System.out.println("\nBölüm seçiniz: ");
+        int j = getIndex(n);
+
+        n = universite.getIndexOf(i).getIndexOf(j).getOgretimElemaniList().size();
+        if(n == 0){
+            System.out.println("Bu bölümde öğretim elemanı bulunmamaktadır. ");
+            return;
+        }
+        System.out.println("\nÖğretim elemanını seçin: ");
+        int o = getIndex(n);
+        universite.getIndexOf(i).getIndexOf(j).OgretimElemaniSil(o);
+        System.out.println("Öğretim elemanı başarıyla silindi. ");
+    }
+
+    private void derseOgretimElemaniAta(){ //bir derse öğretim elemanı ata case 9
 
     }
 
-    private void ogretimElemaniAta(){
+    private void dersOgretimElemaniDegistir(){ //bir dersin öğretim elemanını değiştir case 10
 
     }
 
-    private void ogretimElemaniSil(){
+    private void derseOgrenciEkle(){ //bir derse öğrenci ekle case 11
 
     }
 
-    private void derseOgretimElemaniAta(){
-
-    }
-
-    private void dersOgretimElemaniDegistir(){
-
-    }
-
-    private void derseOgrenciEkle(){
-
-    }
-
-    private void derstenOgrenciSil(){
+    private void derstenOgrenciSil(){ //bir dersten öğrenci sil case 12
 
     }
 
