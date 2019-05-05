@@ -15,9 +15,11 @@ public class Bolum {
     }
 
     public String getAdi() { return adi; }
-    public Ders getIndexOf(int a){ return dersList.get(a); }
+    Ders getIndexOfDers(int a){ return dersList.get(a); }
     List<Ders> getDersList() { return dersList; }
+    Ogrenci getIndexOfOgrenci(int a) { return ogrenciList.get(a); }
     List<Ogrenci> getOgrenciList() { return ogrenciList; }
+    OgretimElemani getIndexOfOgretimElemani(int a) { return ogretimElemaniList.get(a); }
     List<OgretimElemani> getOgretimElemaniList() { return ogretimElemaniList; }
 
     boolean DersEkle(String dersAdi, int subeSayisi){
@@ -54,7 +56,7 @@ public class Bolum {
             ogrenciList.add(ogrenci);
             return true;
         }
-        if(OgrenciAra(ogrenci) == -1){
+        if(OgrenciAra(ogrenci.getNo()) == -1){
             ogrenciList.add(ogrenci);
             return true;
         }
@@ -65,9 +67,9 @@ public class Bolum {
         ogrenciList.remove(index);
     }
 
-    private int OgrenciAra(Ogrenci ogrenci){
+    private int OgrenciAra(int no){
         for (Ogrenci o: ogrenciList) {
-            if(o.getNo() == ogrenci.getNo()){
+            if(o.getNo() == no){
                 return ogrenciList.indexOf(o);
             }
         }
@@ -78,7 +80,7 @@ public class Bolum {
         System.out.println("Bölüme kayıtlı öğrenciler: ");
         System.out.println("    Adı\tSoyadı\tNo");
         for (int i = 0; i < ogrenciList.size(); i++){
-            System.out.printf("%2d. %s\t%s\t%d", i+1, ogrenciList.get(i).getAdi(), ogrenciList.get(i).getSoyadi()
+            System.out.printf("%2d. %s\t%s\t%d \n", i+1, ogrenciList.get(i).getAdi(), ogrenciList.get(i).getSoyadi()
                     , ogrenciList.get(i).getNo());
         }
     }
@@ -108,11 +110,11 @@ public class Bolum {
         ogretimElemaniList.remove(index);
     }
 
-    public void OgretimElemaniListele(){
+    void OgretimElemaniListele(){
         System.out.println("Bölümdeki öğretim elemanları: ");
         System.out.println("    Adı\tSoyadı");
         for (int i = 0; i < ogretimElemaniList.size(); i++){
-            System.out.printf("%2d. %s\t%s", i+1, ogretimElemaniList.get(i).getAdi()
+            System.out.printf("%2d. %s\t%s \n", i+1, ogretimElemaniList.get(i).getAdi()
                     , ogretimElemaniList.get(i).getSoyadi());
         }
     }
